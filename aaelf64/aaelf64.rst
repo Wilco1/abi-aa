@@ -1249,6 +1249,10 @@ Finally the bit-field of X specified in the table (those bits of X picked out by
 
 For "``MOVW``" type relocations it is the assembler’s responsibility to encode the hw bits (bits 21 and 22) to indicate the bits in the target value that the immediate field represents.
 
+Relocation relaxation
+^^^^^^^^^^^^^^^^^^^^^
+
+Linkers may perform relocation relaxations to optimize instructions affected by relocation. Relocations that result in addition with zero may emit a faster register move or nop instead. The relocations ``R_<CLS>_ADR_GOT_PAGE`` and ``R_<CLS>_LD64_GOT_LO12_NC`` may be relaxed if all such relocations for a symbol are consecutive pairs, and both relocations write the same register. In this case each pair is independent and can be safely relaxed. If the symbol is not pre-emptable, the addend is zero and the destination is within ADRP range, the relocations relax to ``R_<CLS>_ADR_PREL_PG_HI21`` and ``R_<CLS>_LDST64_ABS_LO12_NC``.
 
 Proxy-generating relocations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
